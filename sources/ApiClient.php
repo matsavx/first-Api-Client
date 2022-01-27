@@ -138,4 +138,62 @@ class ApiClient
     {
         $this->getToken($user->getLogin(), $user->getPassword());
     }
+
+    /**
+     * @param $id
+     * @param $path
+     * @return bool|string
+     */
+    public function addFile($id, $path): bool|string
+    {
+        $curl_init = curl_init($this->URL . '/storage/' . $id);
+        curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl_init, CURLOPT_POST, true);
+        curl_setopt($curl_init, CURLOPT_POSTFIELDS, [
+            "storage" => $path
+        ]);
+        $response = curl_exec($curl_init);
+        curl_close($curl_init);
+        return $response;
+    }
+
+    /**
+     * @param $storage_name
+     * @return bool|string
+     */
+    public function deleteFile($storage_name): bool|string
+    {
+        $curl_init = curl_init($this->URL . '/storage/' . $storage_name);
+        curl_setopt($curl_init, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl_init);
+        curl_close($curl_init);
+        return $response;
+    }
+
+    /**
+     * @param $storage_name
+     * @return bool|string
+     */
+    public function downloadFile($storage_name): bool|string
+    {
+        $curl_init = curl_init($this->URL . '/storage/download/' . $storage_name);
+        curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl_init);
+        curl_close($curl_init);
+        return $response;
+    }
+
+    /**
+     * @param $id
+     * @return bool|string
+     */
+    public function getAllFiles($id): bool|string
+    {
+        $curl_init = curl_init($this->URL . '/storage/' . $id);
+        curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($curl_init);
+        curl_close($curl_init);
+        return $response;
+    }
 }

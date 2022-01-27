@@ -4,5 +4,7 @@
       "App\\sources\\": "sources/"
     }
   },
-  "require": {}
+  "require": {
+    "ext-curl": "*"
+  }
 }
