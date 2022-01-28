@@ -1,7 +1,8 @@
 <?php
 
 
-namespace App\sources;
+namespace App;
+
 
 
 class ApiClient
@@ -14,7 +15,7 @@ class ApiClient
      */
     public function __construct(string $URL)
     {
-        $this->URL = $URL . '/api';
+        $this->URL = $URL;
     }
 
     /**
@@ -122,23 +123,6 @@ class ApiClient
         return $response;
     }
 
-    public function getToken($login, $password):void
-    {
-        $curl_init = curl_init($this->URL . 'api/authorization');
-        curl_setopt($curl_init, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , [
-            "login" => $login,
-            "password" => $password
-        ] ));
-        $result = curl_exec($curl_init);
-        curl_close($curl_init);
-        echo $result;
-    }
-
-    public function upload(User $user)
-    {
-        $this->getToken($user->getLogin(), $user->getPassword());
-    }
-
     /**
      * @param $id
      * @param $path
@@ -150,10 +134,11 @@ class ApiClient
         curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl_init, CURLOPT_POST, true);
         curl_setopt($curl_init, CURLOPT_POSTFIELDS, [
-            "storage" => $path
+            'file' => '@'.$path
         ]);
         $response = curl_exec($curl_init);
         curl_close($curl_init);
+//        echo $response;
         return $response;
     }
 
@@ -168,6 +153,7 @@ class ApiClient
         curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl_init);
         curl_close($curl_init);
+//        echo $response;
         return $response;
     }
 
@@ -181,6 +167,7 @@ class ApiClient
         curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl_init);
         curl_close($curl_init);
+//        echo $response;
         return $response;
     }
 
@@ -194,6 +181,7 @@ class ApiClient
         curl_setopt($curl_init, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl_init);
         curl_close($curl_init);
+//        echo $response;
         return $response;
     }
 }

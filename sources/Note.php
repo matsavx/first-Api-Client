@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\sources;
+namespace App;
 
 
 class Note
